@@ -11,7 +11,7 @@
 # under the License.
 
 from openstack.metric import metric_service
-from openstack import resource2 as resource
+from openstack import resource
 
 
 class Capabilities(resource.Resource):
@@ -19,7 +19,7 @@ class Capabilities(resource.Resource):
     service = metric_service.MetricService()
 
     # Supported Operations
-    allow_get = True
+    allow_retrieve = True
 
     #: The supported methods of aggregation.
-    aggregation_methods = resource.Body('aggregation_methods', type=list)
+    aggregation_methods = resource.prop('aggregation_methods', type=list)

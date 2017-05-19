@@ -688,6 +688,24 @@ class Resource(object):
         self._translate_response(response, has_body=False)
         return self
 
+    def remove(self, session):
+        """Delete the remote resource based on this instance.
+
+        :param session: The session to use for making this request.
+        :type session: :class:`~openstack.session.Session`
+
+        :return: This :class:`Resource` instance.
+        :raises: :exc:`~openstack.exceptions.MethodNotSupported` if
+                 :data:`Resource.allow_update` is not set to ``True``.
+        """
+        request = self._prepare_request()
+
+        response = session.post(request.uri, endpoint_filter=self.service,
+                                  headers={"Accept": ""})
+
+        self._translate_response(response, has_body=False)
+        return self
+
     @classmethod
     def list(cls, session, paginated=False, **params):
         """This method is a generator which yields resource objects.

@@ -15,43 +15,31 @@ from openstack.database.v1 import database
 from openstack.database.v1 import flavor
 from openstack.database.v1 import instance
 from openstack.database.v1 import user
-from openstack.tests.unit import test_proxy_base2
+from openstack.tests.unit import test_proxy_base
 
 
-class TestDatabaseProxy(test_proxy_base2.TestProxyBase):
+class TestDatabaseProxy(test_proxy_base.TestProxyBase):
     def setUp(self):
         super(TestDatabaseProxy, self).setUp()
         self.proxy = _proxy.Proxy(self.session)
 
     def test_database_create_attrs(self):
-        self.verify_create(self.proxy.create_database, database.Database,
-                           method_kwargs={"instance": "id"},
-                           expected_kwargs={"instance_id": "id"})
+        self.verify_create(self.proxy.create_database, database.Database)
 
     def test_database_delete(self):
         self.verify_delete(self.proxy.delete_database,
-                           database.Database, False,
-                           input_path_args={"instance": "test_id"},
-                           expected_path_args={"instance_id": "test_id"})
+                           database.Database, False)
 
     def test_database_delete_ignore(self):
         self.verify_delete(self.proxy.delete_database,
-                           database.Database, True,
-                           input_path_args={"instance": "test_id"},
-                           expected_path_args={"instance_id": "test_id"})
+                           database.Database, True)
 
     def test_database_find(self):
-        self._verify2('openstack.proxy2.BaseProxy._find',
-                      self.proxy.find_database,
-                      method_args=["db", "instance"],
-                      expected_args=[database.Database, "db"],
-                      expected_kwargs={"instance_id": "instance",
-                                       "ignore_missing": True})
+        self.verify_find(self.proxy.find_database, database.Database)
 
     def test_databases(self):
         self.verify_list(self.proxy.databases, database.Database,
-                         paginated=False, method_args=["id"],
-                         expected_kwargs={"instance_id": "id"})
+                         paginated=False)
 
     def test_database_get(self):
         self.verify_get(self.proxy.get_database, database.Database)
@@ -91,32 +79,19 @@ class TestDatabaseProxy(test_proxy_base2.TestProxyBase):
         self.verify_update(self.proxy.update_instance, instance.Instance)
 
     def test_user_create_attrs(self):
-        self.verify_create(self.proxy.create_user, user.User,
-                           method_kwargs={"instance": "id"},
-                           expected_kwargs={"instance_id": "id"})
+        self.verify_create(self.proxy.create_user, user.User)
 
     def test_user_delete(self):
-        self.verify_delete(self.proxy.delete_user, user.User, False,
-                           input_path_args={"instance": "id"},
-                           expected_path_args={"instance_id": "id"})
+        self.verify_delete(self.proxy.delete_user, user.User, False)
 
     def test_user_delete_ignore(self):
-        self.verify_delete(self.proxy.delete_user, user.User, True,
-                           input_path_args={"instance": "id"},
-                           expected_path_args={"instance_id": "id"})
+        self.verify_delete(self.proxy.delete_user, user.User, True)
 
     def test_user_find(self):
-        self._verify2('openstack.proxy2.BaseProxy._find',
-                      self.proxy.find_user,
-                      method_args=["user", "instance"],
-                      expected_args=[user.User, "user"],
-                      expected_kwargs={"instance_id": "instance",
-                                       "ignore_missing": True})
+        self.verify_find(self.proxy.find_user, user.User)
 
     def test_users(self):
-        self.verify_list(self.proxy.users, user.User, paginated=False,
-                         method_args=["test_instance"],
-                         expected_kwargs={"instance_id": "test_instance"})
+        self.verify_list(self.proxy.users, user.User, paginated=False)
 
     def test_user_get(self):
         self.verify_get(self.proxy.get_user, user.User)

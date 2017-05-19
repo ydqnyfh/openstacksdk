@@ -1,4 +1,4 @@
-# Licensed under the Apache License, Version 2.0 (the "License"); you may
+# under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
 # a copy of the License at
 #
@@ -627,6 +627,20 @@ class Proxy(proxy2.BaseProxy):
         :rtype: :class:`~openstack.cluster.v1.node.Node`.
         """
         return self._delete(_node.Node, node, ignore_missing=ignore_missing)
+
+    def remove_node(self, node, ignore_missing=True):
+        """Delete a profile.
+
+        :param profile: The value can be either the name or ID of a profile or
+            a :class:`~openstack.cluster.v1.profile.Profile` instance.
+        :param bool ignore_missing: When set to ``False``, an exception
+            :class:`~openstack.exceptions.ResourceNotFound` will be raised when
+            the profile could not be found. When set to ``True``, no exception
+            will be raised when attempting to delete a non-existent profile.
+
+        :returns: ``None``
+        """
+        self._remove(_node.Node, node, ignore_missing=ignore_missing)
 
     def find_node(self, name_or_id, ignore_missing=True):
         """Find a single node.

@@ -11,7 +11,7 @@
 # under the License.
 
 from openstack.identity import identity_service
-from openstack import resource2 as resource
+from openstack import resource
 
 
 class Tenant(resource.Resource):
@@ -22,18 +22,18 @@ class Tenant(resource.Resource):
 
     # capabilities
     allow_create = True
-    allow_get = True
+    allow_retrieve = True
     allow_update = True
     allow_delete = True
     allow_list = True
 
     # Properties
     #: The description of the tenant. *Type: string*
-    description = resource.Body('description')
+    description = resource.prop('description')
     #: Setting this attribute to ``False`` prevents users from authorizing
     #: against this tenant. Additionally, all pre-existing tokens authorized
     #: for the tenant are immediately invalidated. Re-enabling a tenant
     #: does not re-enable pre-existing tokens. *Type: bool*
-    is_enabled = resource.Body('enabled', type=bool)
+    is_enabled = resource.prop('enabled', type=bool)
     #: Unique tenant name. *Type: string*
-    name = resource.Body('name')
+    name = resource.prop('name')

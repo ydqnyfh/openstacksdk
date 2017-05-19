@@ -20,7 +20,8 @@ EXAMPLE = {
     'qos_policy_id': 'qos-policy-' + uuid.uuid4().hex,
     'max_kbps': 1500,
     'max_burst_kbps': 1200,
-    'direction': 'egress',
+    # NOTE(ralonsoh): to be implemented in bug 1560961
+    # 'direction': 'egress',
 }
 
 
@@ -46,4 +47,5 @@ class TestQoSBandwidthLimitRule(testtools.TestCase):
         self.assertEqual(EXAMPLE['qos_policy_id'], sot.qos_policy_id)
         self.assertEqual(EXAMPLE['max_kbps'], sot.max_kbps)
         self.assertEqual(EXAMPLE['max_burst_kbps'], sot.max_burst_kbps)
-        self.assertEqual(EXAMPLE['direction'], sot.direction)
+        # NOTE(ralonsoh): to be implemented in bug 1560961
+        # self.assertEqual(EXAMPLE['direction'], sot.direction)

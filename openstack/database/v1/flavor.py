@@ -11,7 +11,7 @@
 # under the License.
 
 from openstack.database import database_service
-from openstack import resource2 as resource
+from openstack import resource
 
 
 class Flavor(resource.Resource):
@@ -22,12 +22,12 @@ class Flavor(resource.Resource):
 
     # capabilities
     allow_list = True
-    allow_get = True
+    allow_retrieve = True
 
     # Properties
     #: Links associated with the flavor
-    links = resource.Body('links')
+    links = resource.prop('links')
     #: The name of the flavor
-    name = resource.Body('name')
+    name = resource.prop('name')
     #: The size in MB of RAM the flavor has
-    ram = resource.Body('ram')
+    ram = resource.prop('ram')

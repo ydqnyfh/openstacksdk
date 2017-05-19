@@ -11,7 +11,7 @@
 # under the License.
 
 from openstack.image import image_service
-from openstack import resource2 as resource
+from openstack import resource
 
 
 class Image(resource.Resource):
@@ -22,52 +22,52 @@ class Image(resource.Resource):
 
     # capabilities
     allow_create = True
-    allow_get = True
+    allow_retrieve = True
     allow_update = True
     allow_delete = True
     allow_list = True
 
     #: Hash of the image data used. The Image service uses this value
     #: for verification.
-    checksum = resource.Body('checksum')
+    checksum = resource.prop('checksum')
     #: The container format refers to whether the VM image is in a file
     #: format that also contains metadata about the actual VM.
     #: Container formats include OVF and Amazon AMI. In addition,
     #: a VM image might not have a container format - instead,
     #: the image is just a blob of unstructured data.
-    container_format = resource.Body('container_format')
+    container_format = resource.prop('container_format')
     #: A URL to copy an image from
-    copy_from = resource.Body('copy_from')
+    copy_from = resource.prop('copy_from')
     #: The timestamp when this image was created.
-    created_at = resource.Body('created_at')
+    created_at = resource.prop('created_at')
     #: Valid values are: aki, ari, ami, raw, iso, vhd, vdi, qcow2, or vmdk.
     #: The disk format of a VM image is the format of the underlying
     #: disk image. Virtual appliance vendors have different formats for
     #: laying out the information contained in a VM disk image.
-    disk_format = resource.Body('disk_format')
+    disk_format = resource.prop('disk_format')
     #: Defines whether the image can be deleted.
     #: *Type: bool*
-    is_protected = resource.Body('protected', type=bool)
+    is_protected = resource.prop('protected', type=bool)
     #: ``True`` if this is a public image.
     #: *Type: bool*
-    is_public = resource.Body('is_public', type=bool)
+    is_public = resource.prop('is_public', type=bool)
     #: A location for the image identified by a URI
-    location = resource.Body('location')
+    location = resource.prop('location')
     #: The minimum disk size in GB that is required to boot the image.
-    min_disk = resource.Body('min_disk')
+    min_disk = resource.prop('min_disk')
     #: The minimum amount of RAM in MB that is required to boot the image.
-    min_ram = resource.Body('min_ram')
+    min_ram = resource.prop('min_ram')
     #: Name for the image. Note that the name of an image is not unique
     #: to a Glance node. The API cannot expect users to know the names
     #: of images owned by others.
-    name = resource.Body('name')
+    name = resource.prop('name')
     #: The ID of the owner, or project, of the image.
-    owner_id = resource.Body('owner')
+    owner_id = resource.prop('owner')
     #: Properties, if any, that are associated with the image.
-    properties = resource.Body('properties')
+    properties = resource.prop('properties')
     #: The size of the image data, in bytes.
-    size = resource.Body('size')
+    size = resource.prop('size')
     #: The image status.
-    status = resource.Body('status')
+    status = resource.prop('status')
     #: The timestamp when this image was last updated.
-    updated_at = resource.Body('updated_at')
+    updated_at = resource.prop('updated_at')

@@ -12,7 +12,7 @@
 
 
 from openstack.cluster import cluster_service
-from openstack import resource2 as resource
+from openstack import resource
 
 
 class Version(resource.Resource):
@@ -27,5 +27,5 @@ class Version(resource.Resource):
     allow_list = True
 
     # Properties
-    links = resource.Body('links')
-    status = resource.Body('status')
+    links = resource.prop('links')
+    status = resource.prop('status')

@@ -152,6 +152,52 @@ class BaseProxy(object):
         return rv
 
     @_check_resource(strict=False)
+    def _remove(self, resource_type, value, ignore_missing=True, **attrs):
+        """Remove a resource
+
+        :param resource_type: The type of resource to delete. This should
+                              be a :class:`~openstack.resource2.Resource`
+                              subclass with a ``from_id`` method.
+        :param value: The value to delete. Can be either the ID of a
+                      resource or a :class:`~openstack.resource2.Resource`
+                      subclass.
+        :param bool ignore_missing: When set to ``False``
+                    :class:`~openstack.exceptions.ResourceNotFound` will be
+                    raised when the resource does not exist.
+                    When set to ``True``, no exception will be set when
+                    attempting to delete a nonexistent resource2.
+        :param dict attrs: Attributes to be passed onto the
+                           :meth:`~openstack.resource2.Resource.delete`
+                           method, such as the ID of a parent resource.
+
+        :returns: The result of the ``delete``
+        :raises: ``ValueError`` if ``value`` is a
+                 :class:`~openstack.resource2.Resource` that doesn't match
+                 the ``resource_type``.
+                 :class:`~openstack.exceptions.ResourceNotFound` when
+                 ignore_missing if ``False`` and a nonexistent resource
+                 is attempted to be deleted.
+
+        """
+        res = self._get_resource(resource_type, value, **attrs)
+
+        try:
+            rv = res.remove(self._session)
+        except exceptions.NotFoundException as e:
+            if ignore_missing:
+                return None
+            else:
+                # Reraise with a more specific type and message
+                raise exceptions.ResourceNotFound(
+                    message="No %s found for %s" %
+                            (resource_type.__name__, value),
+                    details=e.details, response=e.response,
+                    request_id=e.request_id, url=e.url, method=e.method,
+                    http_status=e.http_status, cause=e.cause)
+
+        return rv
+
+    @_check_resource(strict=False)
     def _update(self, resource_type, value, **attrs):
         """Update a resource
 

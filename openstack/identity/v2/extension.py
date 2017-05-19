@@ -11,7 +11,7 @@
 # under the License.
 
 from openstack.identity import identity_service
-from openstack import resource2 as resource
+from openstack import resource
 
 
 class Extension(resource.Resource):
@@ -22,30 +22,29 @@ class Extension(resource.Resource):
 
     # capabilities
     allow_list = True
-    allow_get = True
 
     # Properties
     #: A unique identifier, which will be used for accessing the extension
     #: through a dedicated url ``/extensions/*alias*``. The extension
     #: alias uniquely identifies an extension and is prefixed by a vendor
     #: identifier. *Type: string*
-    alias = resource.Body('alias', alternate_id=True)
+    alias = resource.prop('alias')
     #: A description of the extension. *Type: string*
-    description = resource.Body('description')
+    description = resource.prop('description')
     #: Links to the documentation in various format. *Type: string*
-    links = resource.Body('links')
+    links = resource.prop('links')
     #: The name of the extension. *Type: string*
-    name = resource.Body('name')
+    name = resource.prop('name')
     #: The second unique identifier of the extension after the alias.
     #: It is usually a URL which will be used. Example:
     #: "http://docs.openstack.org/identity/api/ext/s3tokens/v1.0"
     #: *Type: string*
-    namespace = resource.Body('namespace')
+    namespace = resource.prop('namespace')
     #: The last time the extension has been modified (update date).
-    updated_at = resource.Body('updated')
+    updated_at = resource.prop('updated')
 
     @classmethod
-    def list(cls, session, paginated=False, **params):
+    def list(cls, session, **params):
         resp = session.get(cls.base_path, endpoint_filter=cls.service,
                            params=params)
         resp = resp.json()

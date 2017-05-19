@@ -34,5 +34,6 @@ class QoSBandwidthLimitRule(resource.Resource):
     max_kbps = resource.Body('max_kbps')
     #: Maximum burst bandwidth in kbps.
     max_burst_kbps = resource.Body('max_burst_kbps')
+    # NOTE(ralonsoh): to be implemented in bug 1560961
     #: Traffic direction from the tenant point of view ('egress', 'ingress').
-    direction = resource.Body('direction')
+    # direction = resource.prop('direction')
